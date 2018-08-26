@@ -1,4 +1,8 @@
-﻿import urllib
+﻿#!/usr/bin/python
+#
+# Released under the GPL(v2) or later at your choice.
+
+import urllib
 import urllib2
 import re
 import json
@@ -19,7 +23,7 @@ language = addon.getLocalizedString
 addon_id = addon.getAddonInfo('id')
 icon = addon.getAddonInfo('icon')
 fanart = addon.getAddonInfo('fanart')
-base_url = 'http://www.archive.org'
+base_url = 'https://archive.org'
 cache = StorageServer.StorageServer("archiveorg", 6)
 addon_version = addon.getAddonInfo('version')
 
@@ -59,7 +63,7 @@ def get_soup(url):
 def get_category_page(url, iconimage):
     soup = get_soup(url)
     if 'etree' in url:
-        thumb = 'http://ia600202.us.archive.org/17/items/etree/lma.jpg'
+        thumb = 'https://archive.org/download/etree/lma.jpg'
     else:
         thumb = iconimage
 
@@ -249,7 +253,7 @@ def get_media_details(url, title, iconimage):
     desc = '\n'.join(['%s: %s' %(i.title().encode('utf-8'),
                         data['metadata'][i][0].encode('utf-8')) for
             i in data['metadata']])
-    path = 'http://%s%s' %(data['server'], data['dir'])
+    path = 'https://%s%s' %(data['server'], data['dir'])
     files_dict = {'item_url': url, 'item_type': data['misc']['css'],
                   'formats': {}, 'description': desc}
     for i in data['files'].iteritems():
@@ -463,7 +467,7 @@ def search(collection, iconimage):
     if len(search_string) == 0:
         return
     query = urllib.quote('%s AND collection:%s' %(search_string, collection))
-    search_url = 'http://www.archive.org/search.php?query=%s' %query
+    search_url = 'https://archive.org/search.php?query=%s' %query
     get_search_results(search_url, iconimage)
 
 
@@ -516,10 +520,10 @@ except:
     mode = None
 
 if mode == None:
-    audio_url = 'http://www.archive.org/details/audio'
-    audio_thumb = 'http://ia600304.us.archive.org/25/items/audio/audio.gif'
-    video_url = 'http://www.archive.org/details/movies'
-    video_thumb = 'http://ia700303.us.archive.org/0/items/movies/movies.gif'
+    audio_url = 'https://archive.org/details/audio'
+    audio_thumb = 'https://archive.org/25/items/audio/audio.png'
+    video_url = 'https://archive.org/details/movies'
+    video_thumb = 'https:/archive.org/3/items/movies/movies.png'
     if params.has_key('content_type') and params['content_type'] == 'audio':
         get_category_page(audio_url, audio_thumb)
     elif params.has_key('content_type') and params['content_type'] == 'video':
